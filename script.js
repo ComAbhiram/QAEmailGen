@@ -290,6 +290,15 @@ const firebaseConfig = {
   renderTemplates();
 
   document.addEventListener('DOMContentLoaded', () => {
-      // Set default mode to public and render templates
-      switchMode('public');
+      // Show loader
+      const loader = document.getElementById('loader');
+      loader.style.display = 'flex';
+
+      // Simulate loading delay (e.g., fetching templates)
+      setTimeout(() => {
+          // Hide loader after content is ready
+          loader.style.display = 'none';
+          // Set default mode to public and render templates
+          switchMode('public');
+      }, 1000); // Adjust delay as needed
   });
