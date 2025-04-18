@@ -144,11 +144,12 @@ const firebaseConfig = {
       inputs.forEach(input => {
           emailBody = emailBody.replaceAll(input.dataset.field, input.value);
       });
-      const rawEmailBody = emailBody;
-      emailBody = emailBody.replace(/\n/g, '<br>');
+
+      // Render the email body as HTML (including tables)
       const generatedEmailContent = document.getElementById('generatedEmailContent');
-      generatedEmailContent.innerHTML = emailBody;
-      generatedEmailContent.dataset.raw = rawEmailBody;
+      generatedEmailContent.innerHTML = emailBody; // Render HTML content directly
+      generatedEmailContent.dataset.raw = emailBody; // Store raw HTML content for copying
+
       document.getElementById('templateFieldsModal').style.display = 'none';
       document.getElementById('generatedEmailModal').style.display = 'flex';
   }
@@ -212,17 +213,30 @@ const firebaseConfig = {
   
   function addField() {
       const fieldInput = document.getElementById('fieldInput').value.trim();
-      if (fieldInput && fieldInput.match(/^{[a-zA-Z]+}$/)) {
-          if (!currentFields.includes(fieldInput)) {
-              currentFields.push(fieldInput);
-              renderFields();
-              document.getElementById('fieldInput').value = '';
-          } else {
-              alert('This field already exists.');
-          }
-      } else {
-          alert('Please enter a valid field in the format {field}, e.g., {RecipientName}, using letters only in any case.');
+      if (!fieldInput) {
+          alert('Please enter at least one field.');
+          return;
       }
+  
+      // Split the input by commas and process each field
+      const fields = fieldInput.split(',').map(field => field.trim());
+      const invalidFields = fields.filter(field => !field.match(/^{[a-zA-Z0-9 _-]+}$/));
+  
+      if (invalidFields.length > 0) {
+          alert(`Invalid fields detected: ${invalidFields.join(', ')}. Fields must be in the format {fieldName}, and can include letters, numbers, spaces, underscores, and hyphens.`);
+          return;
+      }
+  
+      fields.forEach(field => {
+          if (!currentFields.some(existingField => existingField === field)) {
+              currentFields.push(field); // Preserve the original case and format
+          } else {
+              alert(`Field "${field}" already exists.`);
+          }
+      });
+  
+      renderFields();
+      document.getElementById('fieldInput').value = ''; // Clear the input field
   }
   
   function removeField(index) {
