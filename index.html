@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royal Email Template Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,11 +25,11 @@
                 <button onclick="switchMode('admin')" id="adminModeBtn" disabled>Admin Mode</button>
             </div>
             <div class="public-section active" id="publicSection">
-                <h2>Generate Royal Email</h2>
+                <h2>Generate Email</h2><br></br>
                 <div class="template-list" id="publicTemplateList"></div>
             </div>
             <div class="admin-section" id="adminSection">
-                <h2>Manage Royal Templates</h2>
+                <h2>Manage Templates</h2>
                 <div class="template-list" id="adminTemplateList"></div>
                 <button class="add-template-btn" onclick="startNewTemplate()">Add New Template</button>
                 <div class="template-form" id="templateForm" style="display: none;">
@@ -38,10 +38,10 @@
                     <input type="text" id="templateName" required>
                     <label>Message Body (use plain text, insert fields as {field}, use HTML for tables)</label>
                     <textarea id="messageBody" rows="10" required></textarea>
-                    <label>Fields to Replace (add one by one in {field} format, e.g., {RecipientName})</label>
+                    <label>Fields to Replace (add as comma-separated values in {field} format, e.g., {RecipientName},{value2})</label>
                     <div class="field-input">
-                        <input type="text" id="fieldInput" placeholder="e.g., {RecipientName}">
-                        <button onclick="addField()">Add Field</button>
+                        <input type="text" id="fieldInput" placeholder="e.g., {RecipientName},{value2}">
+                        <button onclick="addField()">Add Fields</button>
                     </div>
                     <div id="fieldList" class="field-list"></div>
                     <button onclick="saveTemplate()">Save Template</button>
