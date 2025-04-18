@@ -288,3 +288,8 @@ const firebaseConfig = {
   
   // Initial render
   renderTemplates();
+
+  document.addEventListener('DOMContentLoaded', () => {
+      // Set default mode to public and render templates
+      switchMode('public');
+  });
